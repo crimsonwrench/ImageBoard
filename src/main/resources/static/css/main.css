@@ -1,0 +1,87 @@
+html, body, ul, li, p {
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', serif;
+    color: #f9c195;
+}
+.wrapper{
+    display: flex;
+    flex-direction: column;
+}
+header{
+    background: rgb(28, 33, 70); /* Old Browsers */
+    background: -webkit-linear-gradient(top, rgb(28, 33, 70), rgb(29, 11, 36)); /*Safari 5.1-6*/
+    background: -o-linear-gradient(top, rgb(28, 33, 70), rgb(29, 11, 36)); /*Opera 11.1-12*/
+    background: -moz-linear-gradient(top, rgb(28, 33, 70), rgb(29, 11, 36)); /*Fx 3.6-15*/
+    background: linear-gradient(to bottom, rgb(28, 33, 70), rgb(29, 11, 36)); /*Standard*/
+
+    height: 180px;
+}
+
+main{
+    /*display: grid;
+    grid-template-areas: "info board";
+    grid-template-columns: 1fr 4fr;
+    grid-gap: 10px;*/
+    background: rgb(29, 11, 36);
+    display: flex;
+    align-items: start;
+    justify-content: space-around;
+    flex: 1 0;
+    min-height: calc(100vh - 230px);
+}
+
+footer{
+
+    background: rgb(29, 11, 36); /* Old Browsers */
+    background: -webkit-linear-gradient(top, rgb(29, 11, 36),rgb(11,10,10)); /*Safari 5.1-6*/
+    background: -o-linear-gradient(top, rgb(29, 11, 36),rgb(11,10,10)); /*Opera 11.1-12*/
+    background: -moz-linear-gradient(top, rgb(29, 11, 36),rgb(11,10,10)); /*Fx 3.6-15*/
+    background: linear-gradient(to bottom, rgb(29, 11, 36), rgb(9, 9, 9)); /*Standard*/
+    /*flex: 0 0;*/
+    height: 50px;
+    /*position: absolute;
+    bottom: 0;
+    min-height: calc(100vh - 50px);
+    width: 100%;*/
+}
+
+.topic{
+
+}
+.info{
+    /*grid-area: info;*/
+    border: 2px solid #252a5b;
+    padding: 5px;
+    background-color: rgba(37, 42, 91, 0.10);
+    flex-basis: 200px;
+}
+
+.thread{
+    margin-bottom: 5px;
+}
+.post{
+    /*grid-area: post;*/
+    margin: 5px 5px 5px 10px;
+    border: 2px solid #252a5b;
+}
+.infoblock{
+    margin-bottom: 10px;
+    border-bottom: 1px solid #252a5b;
+    background: rgba(37, 42, 91, 0.10);
+    padding: 5px;
+}
+
+.d{
+    border: 2px solid #252a5b;
+}
+.stuff {
+    padding: 5px;
+}
+.board{
+    flex-basis: 1050px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}

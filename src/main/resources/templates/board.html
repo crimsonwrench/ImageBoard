@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title th:text="${currentBoard.getBoardTitle()}"></title>
+    <link href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"/>
+</head>
+<body>
+<header></header>
+    <main>
+        <div class="info">
+            <ol>
+                <li>Популярное</li>
+                <li>Топ 10</li>
+            </ol>
+        </div>
+        <div class="board">
+            <div class="thread" th:unless="${threadList.isEmpty()}" th:each="thread : ${threadList}">
+                <div class="d">
+                    <div class="infoblock">
+                        <p th:utext="'Anonymous <b>' + ${thread.getTitle()} + '</b> ' + ${thread.getFormattedDate()} + ' №' + ${thread.getId()}"></p>
+                        <a th:href="@{/{ref}/res/{id}(id=${thread.getId()+'.html'}, ref=${currentBoard.getBoardRef()})}">[Ответ]</a>
+                    </div>
+                    <div class="stuff">
+                        <img th:src="@{{file}(file=${thread.getPicture().getFullPath()})}" width="100px" height="100px">
+                        <p th:text="${thread.getText()}"></p>
+                        <form action="#" th:action="@{/{ref}/rm/{id}(id=${thread.getId()}, ref=${currentBoard.getBoardRef()})}">
+                            <input type="submit" value="Удалить тред" />
+                        </form>
+                    </div>
+                </div>
+
+                <div class="post" th:unless="${thread.getLastPosts().isEmpty()}" th:each="post : ${thread.getLastPosts()}">
+                        <div class="infoblock">
+                            <p th:text="'Anonymous ' + ${post.getFormattedDate()} + ' №' + ${post.getPostId()}"></p>
+                        </div>
+                        <div class="stuff">
+                            <p th:text="${post.getPostText()}"></p>
+                        </div>
+                    </div>
+                </div>
+            <form action="#" th:action="@{/{ref}(ref=${currentBoard.getBoardRef()})}" th:object="${newThread}" method="post" enctype="multipart/form-data">
+                <h3>Создать новый тред:</h3>
+                <table>
+                    <tr>
+                        <td>Заголовок треда</td>
+                        <td><input type="text" th:field="*{title}"></td>
+                    </tr>
+                    <tr>
+                        <td>Текст треда</td>
+                        <td><textarea th:field="*{text}"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>Выберите изображение</td>
+                        <td><input type="file" name="file"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="submit" value="Создать тред" /></td>
+                        <td><input type="reset" value="Отмена" /></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </main>
+<footer></footer>
+</body>
+</html>
