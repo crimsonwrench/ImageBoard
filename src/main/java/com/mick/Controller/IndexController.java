@@ -1,6 +1,5 @@
 package com.mick.Controller;
 
-import com.mick.Model.Board;
 import com.mick.Service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

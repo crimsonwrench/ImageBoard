@@ -7,39 +7,55 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"/>
 </head>
 <body>
+<div class="wrapper">
 <header></header>
-<main>
+    <main>
     <div class="info">
         <ol>
             <li>Популярное</li>
             <li>Топ 10</li>
         </ol>
     </div>
-    <div class="thread">
-        <div class="d">
-            <div class="infoblock">
-                <p th:utext="'Anonymous <b>' + ${currentThread.getTitle()} + '</b> ' + ${currentThread.getFormattedDate()} + ' №' + ${currentThread.getId()}"></p>
+    <div class="board">
+        <div class="thread">
+            <div class="d">
+                <div class="infoblock">
+                    <p th:utext="'Anonymous <b>' + ${currentThread.getTitle()} + '</b> ' + ${currentThread.getFormattedDate()} + ' №' + ${currentThread.getId()}"></p>
+                </div>
+                <div class="stuff">
+                    <div class="file" th:unless="${currentThread.getPicture() == null}">
+                        <img th:src="@{{file}(file=${currentThread.getPicture().getFullPath()})}">
+                    </div>
+                    <div class="text">
+                        <p th:text="${currentThread.getText()}"></p>
+                    </div>
+                </div>
             </div>
-            <div class="stuff">
-                <img th:src="@{{file}(file=${currentThread.getPicture().getFullPath()})}" width="100px" height="100px">
-                <p th:text="${currentThread.getText()}"></p>
-            </div>
-        </div>
 
-        <div class="post" th:each="post : ${postList}">
-            <div class="infoblock">
-                <p th:text="'Anonymous ' + ${post.getFormattedDate()} + ' №' + ${post.getPostId()}"></p>
-            </div>
-            <div class="stuff">
-                <p th:text="${post.getPostText()}"></p>
+            <div class="post" th:each="post : ${postList}">
+                <div class="infoblock">
+                    <p th:text="'Anonymous ' + ${post.getFormattedDate()} + ' №' + ${post.getPostId()}"></p>
+                </div>
+                <div class="stuff">
+                    <div class="file" th:unless="${post.getPicture() == null}">
+                        <img th:src="@{{file}(file=${post.getPicture().getFullPath()})}">
+                    </div>
+                    <div class="text">
+                        <p th:text="${post.getPostText()}"></p>
+                    </div>
+                </div>
             </div>
         </div>
-        <form action="#" th:action="@{/{ref}/res/{id}(ref=${currentBoard.getBoardRef()}, id=${currentThread.getId()+'.html'})}" th:object="${newPost}" method="post">
+        <form action="#" th:action="@{/{ref}/res/{id}(ref=${currentBoard.getBoardRef()}, id=${currentThread.getId()+'.html'})}" th:object="${newPost}" method="post" enctype="multipart/form-data">
             <h3>Ответить:</h3>
             <table>
                 <tr>
                     <td>Текст поста</td>
                     <td><textarea th:field="*{postText}"></textarea></td>
+                </tr>
+                <tr>
+                    <td>Выберите изображение</td>
+                    <td><input type="file" name="file"></td>
                 </tr>
                 <tr>
                     <td><input type="submit" value="Ответить" /></td>
@@ -51,10 +67,11 @@
             <input type="submit" value="Вернуться к списку тредов" />
         </form>
     </div>
-</main>
+    </main>
 <footer></footer>
 <!-- /container -->
 <script src="../static/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
 <script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+</div>
 </body>
 </html>

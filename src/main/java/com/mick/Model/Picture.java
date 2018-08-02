@@ -33,8 +33,8 @@ public class Picture {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "picture")
     private Set<Thread> threads;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Post post;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "picture")
+    private Set<Post> posts;
 
 
     public Picture() { }
@@ -95,12 +95,12 @@ public class Picture {
         this.threads = threads;
     }
 
-    public Post getPost() {
-        return post;
+    public Set<Post> getPosts() {
+        return posts;
     }
 
-    public void setPost(Post post) {
-        this.post = post;
+    public void setPosts(Set<Post> posts) {
+        this.posts = posts;
     }
 
     public String getFullPath() { return source + name; }

@@ -20,7 +20,7 @@ public class Post {
     @Column(name = "post_id")
     private int postId;
 
-    @Column(name = "post_text", length = 999)
+    @Column(name = "post_text", length = 3000)
     private String postText;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -31,7 +31,7 @@ public class Post {
     @Column(name = "post_date", updatable = false)
     private Date postDate;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pic_id")
     private Picture picture;
 

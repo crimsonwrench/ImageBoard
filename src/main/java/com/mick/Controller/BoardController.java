@@ -48,43 +48,25 @@ public class BoardController {
             model.addAttribute("currentBoard", boardService.findByRef(ref));
             model.addAttribute("threadList", threadList);
             model.addAttribute("newThread", new Thread());
-            model.addAttribute("newPicture", new Picture());
             return "board";
-        } else {
-            return "redirect:/";
+        }
+        else {
+            return "redirect:/error/404";
         }
     }
 
     @PostMapping("/{ref}")
     public String createThread(@PathVariable("ref") String ref,
                                @ModelAttribute Thread thread,
-                               @ModelAttribute("newPicture") Picture newPicture,
                                @RequestAttribute("file") MultipartFile file) {
         Board currentBoard = boardService.findByRef(ref);
 
-        newPicture.setSource("/img/");
-        newPicture.setName(file.getOriginalFilename());
-        newPicture.setSize(file.getSize());
+        Picture threadPicture = new Picture();
 
-        try {
-            BufferedImage filePicture = ImageIO.read(file.getInputStream());
-            newPicture.setHeight(filePicture.getHeight());
-            newPicture.setWidth(filePicture.getWidth());
-            newPicture.setHash(newPicture.hashCode());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        if(pictureService.existsByHash(newPicture.getHash())) {
-            Picture match = pictureService.findByHashCode(newPicture.getHash());
-            thread.setPicture(match);
-        } else {
-            pictureService.savePicture(file, newPicture);
-            thread.setPicture(newPicture);
-        }
+        if(!file.isEmpty())
+            thread.setPicture(pictureService.savePicture(file, threadPicture));
 
         thread.setBoard(currentBoard);
-
         threadService.createThread(thread);
         return "redirect:/{ref}";
     }

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 
@@ -19,12 +21,32 @@ public class PictureService {
         this.pictureRepository = pictureRepository;
     }
 
-    public void savePicture(MultipartFile file, Picture picture){
-        try (FileOutputStream fos = new FileOutputStream("."+picture.getFullPath())) {
-            fos.write(file.getBytes());
-            pictureRepository.save(picture);
-        } catch (Exception ex) {
+    public Picture savePicture(MultipartFile data, Picture picture){
+
+        picture.setSource("/img/");
+        picture.setName(data.getOriginalFilename());
+        picture.setSize(data.getSize());
+
+        try {
+            BufferedImage filePicture = ImageIO.read(data.getInputStream());
+            picture.setHeight(filePicture.getHeight());
+            picture.setWidth(filePicture.getWidth());
+            picture.setHash(picture.hashCode());
+
+            if (existsByHash(picture.getHash())) {
+                return findByHashCode(picture.getHash());
+            }
+            else {
+                try (FileOutputStream fos = new FileOutputStream("."+picture.getFullPath())) {
+                    fos.write(data.getBytes());
+                    pictureRepository.save(picture);
+                    return picture;
+                }
+            }
+        }
+        catch (Exception ex) {
             ex.printStackTrace();
+            return picture;
         }
     }
 

@@ -25,7 +25,7 @@ public class Thread {
     @Column(name = "title", length = 50)
     private String title;
 
-    @Column(name = "text", length = 999)
+    @Column(name = "text", length = 3000)
     private String text;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "thread", orphanRemoval = true)

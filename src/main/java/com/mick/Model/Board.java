@@ -21,11 +21,6 @@ public class Board {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "board", orphanRemoval = true)
     private List<Thread> threads;
 
-    public Board(String boardName, String boardRef) {
-        this.boardName = boardName;
-        this.boardRef = boardRef;
-    }
-
     public Board() { }
 
     public String getBoardName() {
